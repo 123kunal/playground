@@ -1,0 +1,30 @@
+// example IDL file
+
+namespace marketDataSchema;
+
+//enum Action:char { Add = 'A', Modify='M' , Remove='R' }
+
+//union Any { LevelInfoMessage }  // add more elements..
+
+struct ContextData 
+{
+  bookSequenceNumber:ulong;
+  exchangeSequenceNumber:ulong;
+  feedHandlerTime:ulong;
+  exchangeTime:ulong;
+}
+struct LevelData
+{ 
+  price:double;
+  totalQty:ulong;
+  numberOfOrders:ulong;  
+}
+table LevelInfoMessage
+{
+  contextData:ContextData;
+  sid:uint;
+  levelData:LevelData;
+  //feedName:string;
+}
+
+root_type LevelInfoMessage;

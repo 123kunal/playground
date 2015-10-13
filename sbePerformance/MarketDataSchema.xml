@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<sbe:messageSchema xmlns:sbe="http://www.fixprotocol.org/ns/simple/1.0"
+                   package="marketDataMessageSchema"
+                   id="1"
+                   version="0"
+                   semanticVersion="5.2"
+                   description="Code generation unit test support"
+                   byteOrder="littleEndian">
+    <types>
+        <composite name="messageHeader" description="Message identifiers and length of message root">
+            <type name="blockLength" primitiveType="uint16"/>
+            <type name="templateId" primitiveType="uint16"/>
+            <type name="schemaId" primitiveType="uint16"/>
+            <type name="version" primitiveType="uint16"/>
+        </composite>
+        <composite name="groupSizeEncoding" description="Repeating group dimensions">
+            <type name="blockLength" primitiveType="uint16"/>
+            <type name="numInGroup" primitiveType="uint8"/>
+        </composite>
+        <composite name="varDataEncoding">
+            <type name="length" primitiveType="uint8"/>
+            <type name="varData" primitiveType="uint8" length="0" characterEncoding="UTF-8"/>
+        </composite>
+    </types>
+    <types>
+        <composite name="ContextData">
+            <type name="bookSequenceNumber" primitiveType="uint64"/>
+            <type name="exchangeSequenceNumber" primitiveType="uint64"/>
+            <type name="feedHandlerTime" primitiveType="uint64"/>
+            <type name="exchangeTime" primitiveType="uint64"/>
+        </composite>
+        <composite name="LevelData">
+            <type name="price" primitiveType="double"/>
+            <type name="totalQty" primitiveType="uint64"/>
+            <type name="numberOfOrders" primitiveType="uint64"/>
+        </composite>
+        <enum name="BooleanType" encodingType="uint8">
+            <validValue name="FALSE">0</validValue>
+            <validValue name="TRUE">1</validValue>
+        </enum>
+        <enum name="Action" encodingType="char">
+            <validValue name="Add">A</validValue>
+            <validValue name="Modify">M</validValue>
+            <validValue name="Remove">R</validValue>
+        </enum>
+    </types>
+    <sbe:message name="LevelInfoMesage" id="1" description="Level Information">
+        <field name="ctx" id="1" type="ContextData"/>
+        <field name="sid" id="2" type="uint32"/>
+        <field name="levelData" id="3" type="LevelData"/>
+        <data name="feedName" id="4" type="varDataEncoding"/>
+    </sbe:message>
+</sbe:messageSchema>
